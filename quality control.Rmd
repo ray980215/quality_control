@@ -1,13 +1,11 @@
 ---
 title: "Quality Control Project"
 author: "309657009 邱泓儒"
-output: 
-  html_document:
-    keep_md: true
+output:
+  rmarkdown::github_document
 ---
 
 ```{r warning=FALSE, message=FALSE}
-knitr::opts_chunk$set(fig.path = "README_figs/README-")
 library(qcc)
 setwd("C:/Users/ray98/Desktop/project/class/qc")
 dt <- read.csv("water_potability.csv")
