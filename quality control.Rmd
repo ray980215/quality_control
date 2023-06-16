@@ -1,0 +1,70 @@
+---
+title: "Quality Control Project"
+author: "309657009 邱泓儒"
+output:
+  html_document: default
+  word_document: default
+---
+
+```{r warning=FALSE, message=FALSE}
+library(qcc)
+setwd("C:/Users/ray98/Desktop/project/class/qc")
+dt <- read.csv("water_potability.csv")
+dt <- dt[1:2000,]
+dt <- dt[sample(2000),]
+```
+
+## Data cleaning
+```{r}
+# use the Turbidity variable
+tur <- dt$Turbidity[1:2000]
+
+# check if there is NA
+which(is.na(dt$Turbidity))
+
+# check the assumptions for control chart
+hist(tur, breaks = 20, main = "Histogram of Turbidity", xlab = "Turbidity")
+shapiro.test(tur)
+
+par(mfrow=c(1,3))
+plot(dt$Hardness[1:2000], dt$Turbidity[1:2000], pch = 20, cex = 0.5, ylab = "Turbidity", xlab = "Hardness")
+plot(dt$Solids[1:2000], dt$Turbidity[1:2000], pch = 20, cex = 0.5, ylab = "Turbidity", xlab = "Solids")
+plot(dt$ph[1:2000], dt$Turbidity[1:2000], pch = 20, cex = 0.5, ylab = "Turbidity", xlab = "ph")
+```
+
+## X bar-S chart
+```{r}
+tur <- matrix(dt$Turbidity[1:2000], ncol = 5)
+par(mfrow=c(1,1))
+obj <- qcc(tur[1:50,], type="xbar", newdata=tur[51:400,], std.dev = "UWAVE-SD")
+
+obj <- qcc(tur[1:50,], type="S", newdata=tur[51:400,])
+```
+
+## X bar-R chart
+```{r}
+obj <- qcc(tur[1:50,], type="xbar", newdata=tur[51:400,], std.dev = "UWAVE-R")
+
+obj <- qcc(tur[1:50,], type="R", newdata=tur[51:400,])
+```
+
+
+## p chart
+```{r}
+pot <- matrix(dt$Potability[1:2000], ncol = 20)
+pot <- as.data.frame(pot)
+pot$defect <- 20-rowSums(pot)
+pot$size <- 20
+with(pot, qcc(pot$defect[1:20], pot$size[1:20], type = "p", newdata=pot$defect[21:100], newsizes=pot$size[21:100]))
+```
+
+## CUSUM chart
+```{r}
+q <- cusum(tur[1:50,], newdata=tur[51:400,], se.shift = 1)
+```
+
+## EWMA chart
+```{r}
+q <- ewma(tur[1:50,], lambda=0.2, nsigmas=3, newdata=tur[51:400,]) 
+```
+
