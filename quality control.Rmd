@@ -1,9 +1,9 @@
 ---
 title: "Quality Control Project"
 author: "309657009 邱泓儒"
-output:
-  rmarkdown::github_document
-  
+output: 
+  html_document:
+    keep_md: true
 ---
 
 ```{r warning=FALSE, message=FALSE}
