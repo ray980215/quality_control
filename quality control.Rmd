@@ -1,13 +1,13 @@
 ---
-title: "Exploring many variaables"
-author: "Shankar"
-date: "October 2, 2016"
-output:  
+title: "Quality Control Project"
+author: "309657009 邱泓儒"
+output: 
   html_document:
     keep_md: true
 ---
 
-```{r}
+```{r warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(fig.path = "README_figs/README-")
 library(qcc)
 setwd("C:/Users/ray98/Desktop/project/class/qc")
 dt <- read.csv("water_potability.csv")
