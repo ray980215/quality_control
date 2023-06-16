@@ -6,7 +6,8 @@ output:
     keep_md: true
 ---
 
-```{r warning=FALSE, message=FALSE}
+```{r}
+knitr::opts_chunk$set(fig.path = "README_figs/README-")
 library(qcc)
 setwd("C:/Users/ray98/Desktop/project/class/qc")
 dt <- read.csv("water_potability.csv")
