@@ -49,6 +49,7 @@ obj <- qcc(tur[1:50,], type="R", newdata=tur[51:400,])
 
 ## p chart
 ```{r}
+# use the variable Potability to construct p chart
 pot <- matrix(dt$Potability[1:2000], ncol = 20)
 pot <- as.data.frame(pot)
 pot$defect <- 20-rowSums(pot)
